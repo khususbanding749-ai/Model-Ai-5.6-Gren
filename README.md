@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <html lang="id">
 <head>
 <meta charset="UTF-8" />
@@ -7,26 +7,36 @@
 <title>GrenX Voice Studio</title>
 <style>
   *{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,'Segoe UI',Roboto,sans-serif;-webkit-tap-highlight-color:transparent}
-  html{height:100%;height:-webkit-fill-available;overflow:hidden;overscroll-behavior:none;position:fixed;width:100%;inset:0}
-  body{
-    height:100vh;height:100dvh;width:100%;
-    overflow:hidden;overscroll-behavior:none;position:fixed;inset:0;
+  html,body{
+    height:100%;width:100%;
+    overflow:hidden;overscroll-behavior:none;
     -webkit-user-select:none;user-select:none;-webkit-touch-callout:none;
-    background:#000;color:#fff;display:flex;justify-content:center;
+    position:fixed;inset:0;
+  }
+  body{
+    background:#000;color:#fff;
+    display:flex;justify-content:center;
     background-image:
       radial-gradient(circle at 15% 15%,rgba(0,255,180,.08),transparent 45%),
       radial-gradient(circle at 85% 85%,rgba(120,0,255,.1),transparent 45%);
-    background-attachment:fixed;
   }
   .app{
     width:100%;max-width:720px;
-    height:100vh;height:100dvh;
+    height:100dvh;height:100vh;
     display:flex;flex-direction:column;
     position:relative;z-index:1;overflow:hidden;
-    contain:layout size;
   }
-  .header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;flex-shrink:0;background:rgba(0,0,0,.65);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.06);position:relative;z-index:20}
-  .brand{display:flex;align-items:center;gap:10px}
+
+  /* HEADER */
+  .header{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:12px 16px;flex-shrink:0;
+    background:rgba(0,0,0,.7);
+    backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+    border-bottom:1px solid rgba(255,255,255,.06);
+    position:relative;z-index:20;
+  }
+  .brand{display:flex;align-items:center;gap:10px;min-width:0}
   .brand-logo{width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,#00ffb4,#7c3aed);display:flex;align-items:center;justify-content:center;color:#000;box-shadow:0 4px 14px rgba(0,255,180,.35);flex-shrink:0}
   .brand-logo svg{width:20px;height:20px;stroke:#000;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
   .brand-text{min-width:0}
@@ -39,30 +49,32 @@
   .btn-round.active{background:linear-gradient(135deg,#00ffb4,#7c3aed);color:#000}
   .btn-round.active svg{stroke:#000}
 
-  .chat{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;padding:14px 16px 16px;display:flex;flex-direction:column;gap:14px;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;scroll-behavior:smooth;contain:strict}
+  /* CHAT AREA */
+  .chat{
+    flex:1;min-height:0;
+    overflow-y:auto;overflow-x:hidden;
+    padding:14px 16px 16px;
+    display:flex;flex-direction:column;gap:14px;
+    -webkit-overflow-scrolling:touch;
+    overscroll-behavior:contain;
+  }
   .chat::-webkit-scrollbar{width:0}
+
   .welcome{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:20px;text-align:center}
   .welcome-avatar{
-    width:110px;height:110px;border-radius:50%;
+    width:100px;height:100px;border-radius:50%;
     background:linear-gradient(135deg,#00ffb4,#7c3aed,#ff5f1f);
     background-size:200% 200%;
     display:flex;align-items:center;justify-content:center;
-    font-size:44px;font-weight:900;color:#000;
+    font-size:40px;font-weight:900;color:#000;
     box-shadow:0 12px 40px rgba(0,255,180,.4);
-    margin-bottom:22px;position:relative;flex-shrink:0;
+    margin-bottom:20px;flex-shrink:0;
     animation:avatarPulse 3s ease-in-out infinite,gradientShift 4s ease infinite;
     font-family:'SF Mono',monospace;
   }
-  .welcome-avatar::after{
-    content:'';position:absolute;inset:-8px;border-radius:50%;
-    background:linear-gradient(135deg,#00ffb4,#7c3aed,#ff5f1f);
-    background-size:200% 200%;
-    opacity:.3;filter:blur(20px);z-index:-1;
-    animation:gradientShift 4s ease infinite;
-  }
   @keyframes avatarPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
   @keyframes gradientShift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
-  .welcome h2{font-size:24px;font-weight:700;margin-bottom:8px;letter-spacing:-.3px;background:linear-gradient(135deg,#fff,#00ffb4,#a855f7);background-size:200% 200%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:gradientShift 5s ease infinite;font-family:'SF Mono',monospace}
+  .welcome h2{font-size:22px;font-weight:700;margin-bottom:8px;background:linear-gradient(135deg,#fff,#00ffb4,#a855f7);background-size:200% 200%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:gradientShift 5s ease infinite;font-family:'SF Mono',monospace}
   .welcome p{font-size:13px;color:#8e8e93;line-height:1.5;max-width:340px}
   .welcome-chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:20px;max-width:400px}
   .chip{
@@ -72,10 +84,9 @@
     font-size:12px;cursor:pointer;transition:.2s;
     display:flex;align-items:center;gap:6px;
   }
-  .chip:hover{border-color:#00ffb4;color:#00ffb4;background:rgba(0,255,180,.08)}
-  .chip:active{transform:scale(.96)}
+  .chip:active{transform:scale(.96);border-color:#00ffb4;color:#00ffb4}
 
-  .msg{max-width:88%;padding:11px 15px;border-radius:20px;font-size:15px;line-height:1.5;word-wrap:break-word;overflow-wrap:break-word;white-space:pre-wrap;animation:fade .25s cubic-bezier(.2,.8,.2,1);word-break:break-word}
+  .msg{max-width:88%;padding:11px 15px;border-radius:20px;font-size:15px;line-height:1.5;word-wrap:break-word;overflow-wrap:break-word;white-space:pre-wrap;animation:fade .25s cubic-bezier(.2,.8,.2,1)}
   @keyframes fade{from{opacity:0;transform:translateY(8px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
   .msg.user{align-self:flex-end;background:#2c2c2e;color:#fff;border-bottom-right-radius:6px}
   .msg.bot{align-self:flex-start;background:transparent;color:#e5e5e7;border-bottom-left-radius:6px;padding:4px 2px;max-width:100%}
@@ -115,18 +126,14 @@
   .typing span:nth-child(3){animation-delay:.24s,.24s}
   @keyframes bounce{0%,60%,100%{transform:translateY(0) scale(.9);opacity:.4}30%{transform:translateY(-5px) scale(1.1);opacity:1}}
 
-  .quick-menu{padding:0 16px;display:flex;flex-direction:column;gap:2px;margin-bottom:6px;position:relative;z-index:2;flex-shrink:0}
-  .q-item{display:flex;align-items:center;gap:14px;padding:12px 4px;color:#e5e5e7;font-size:14.5px;background:none;border:none;cursor:pointer;text-align:left;width:100%;transition:.2s;border-radius:12px}
-  .q-item:active{opacity:.6;background:rgba(255,255,255,.05)}
-  .q-item svg{width:19px;height:19px;stroke:#e5e5e7;stroke-width:1.8;fill:none;flex-shrink:0;stroke-linecap:round;stroke-linejoin:round}
-
+  /* INPUT BAR — FIXED DI BOTTOM */
   .input-wrap{
     flex-shrink:0;
-    padding:8px 16px calc(16px + env(safe-area-inset-bottom,0px));
-    background:rgba(0,0,0,.75);
+    padding:8px 16px calc(12px + env(safe-area-inset-bottom,0px));
+    background:rgba(0,0,0,.8);
     backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+    border-top:1px solid rgba(255,255,255,.05);
     position:relative;z-index:3;
-    transition:padding .12s ease;
   }
   .attach-bar{
     display:none;margin-bottom:8px;padding:6px;
@@ -146,7 +153,7 @@
     border:1px solid rgba(0,255,180,.15);
     border-radius:26px;
     padding:6px 6px 6px 8px;
-    min-height:52px;max-height:130px;
+    min-height:50px;
     transition:border-color .2s,box-shadow .2s;
   }
   .input-bar.focus{border-color:#00ffb4;box-shadow:0 0 20px rgba(0,255,180,.2)}
@@ -174,13 +181,12 @@
   .input-bar textarea{
     flex:1;background:none;border:none;outline:none;
     color:#fff;font-size:15px;
-    padding:10px 4px;
-    resize:none;max-height:100px;min-height:24px;
+    padding:8px 4px;
+    resize:none;max-height:90px;min-height:24px;
     line-height:1.4;font-family:inherit;
     overflow-y:auto;
     -webkit-appearance:none;
     align-self:flex-end;
-    word-break:break-word;
   }
   .input-bar textarea::placeholder{color:#5f6f7d}
 
@@ -198,17 +204,18 @@
   .send-btn:disabled{opacity:.4;cursor:not-allowed;animation:none;background:#2c2c2e;color:#8e8e93}
   .send-btn svg{width:17px;height:17px;fill:currentColor}
 
+  /* VOICE OVERLAY */
   .voice-overlay{
     position:fixed;inset:0;z-index:150;
-    background:rgba(0,0,0,.94);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);
+    background:rgba(0,0,0,.94);
+    backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);
     display:none;flex-direction:column;
     justify-content:center;align-items:center;
     padding:30px;text-align:center;
-    contain:strict;
   }
   .voice-overlay.show{display:flex;animation:fade .25s ease}
   .voice-orb{
-    width:160px;height:160px;border-radius:50%;
+    width:150px;height:150px;border-radius:50%;
     background:linear-gradient(135deg,#00ffb4,#7c3aed);
     background-size:200% 200%;
     display:flex;align-items:center;justify-content:center;
@@ -225,7 +232,7 @@
   .voice-orb::after{animation:orbWave 2s ease-out infinite}
   @keyframes orbWave{0%{transform:scale(1);opacity:.5}100%{transform:scale(2);opacity:0}}
   @keyframes orbPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
-  .voice-orb svg{width:60px;height:60px;stroke:#000;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+  .voice-orb svg{width:56px;height:56px;stroke:#000;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
   .voice-status{font-size:16px;font-weight:700;color:#fff;margin-bottom:8px;font-family:'SF Mono',monospace}
   .voice-hint{font-size:12.5px;color:#8e8e93;max-width:280px;line-height:1.5}
   .voice-transcript{
@@ -242,6 +249,7 @@
   }
   .voice-close svg{width:20px;height:20px;stroke:#fff;fill:none;stroke-width:2.2;stroke-linecap:round}
 
+  /* MENU */
   .menu{position:absolute;top:56px;right:14px;background:#1c1c1e;border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:8px;min-width:260px;box-shadow:0 20px 60px rgba(0,0,0,.8);z-index:50;display:none;transform-origin:top right;max-height:70vh;overflow-y:auto}
   .menu.show{display:block;animation:dropIn .2s cubic-bezier(.2,.9,.3,1.2)}
   .menu::-webkit-scrollbar{width:0}
@@ -251,9 +259,11 @@
   .menu-item svg{width:17px;height:17px;stroke:#00ffb4;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
   .menu-sep{height:1px;background:rgba(255,255,255,.08);margin:6px 4px}
 
+  /* SETTINGS */
   .settings{
     position:fixed;inset:0;z-index:100;
-    background:rgba(0,0,0,.75);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+    background:rgba(0,0,0,.75);
+    backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
     display:none;justify-content:center;align-items:flex-end;
   }
   .settings.show{display:flex;animation:fade .2s ease}
@@ -295,6 +305,7 @@
   .save-btn{width:100%;padding:14px;background:linear-gradient(135deg,#00ffb4,#00d9ff);border:none;border-radius:14px;color:#000;font-size:14px;font-weight:800;cursor:pointer;margin-top:8px;transition:.15s;font-family:'SF Mono',monospace;letter-spacing:.5px}
   .save-btn:active{transform:scale(.98)}
 
+  /* TOAST */
   .toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%) translateY(20px);background:#1c1c1e;color:#00ffb4;font-size:12.5px;padding:10px 18px;border-radius:12px;z-index:200;opacity:0;pointer-events:none;transition:.25s cubic-bezier(.2,.9,.3,1.2);white-space:nowrap;border:1px solid rgba(0,255,180,.2);font-family:'SF Mono',monospace;box-shadow:0 0 20px rgba(0,255,180,.2);max-width:90vw;text-align:center;overflow:hidden;text-overflow:ellipsis}
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
   .toast.err{color:#f87171;border-color:rgba(239,68,68,.3);box-shadow:0 0 20px rgba(239,68,68,.2)}
@@ -357,21 +368,6 @@
         <div class="chip" onclick="quickAsk('buatkan gambar kucing cyberpunk')">Gambar</div>
       </div>
     </div>
-  </div>
-
-  <div class="quick-menu" id="quickMenu">
-    <button class="q-item" onclick="menuAction('voice')">
-      <svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
-      Voice Mode
-    </button>
-    <button class="q-item" onclick="menuAction('video')">
-      <svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
-      Generate Video
-    </button>
-    <button class="q-item" onclick="menuAction('image')">
-      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-      Generate Gambar
-    </button>
   </div>
 
   <div class="input-wrap" id="inputWrap">
@@ -445,13 +441,6 @@
           <span class="range-val" id="setTimeoutVal">30s</span>
         </div>
       </div>
-      <div class="setting-item">
-        <div class="setting-info">
-          <strong>Respon Cepat</strong>
-          <span>Mode hemat waktu</span>
-        </div>
-        <label class="switch"><input type="checkbox" id="setFast" checked><span class="slider"></span></label>
-      </div>
     </div>
 
     <div class="settings-group">
@@ -466,7 +455,7 @@
       <div class="setting-item">
         <div class="setting-info">
           <strong>Pilih Suara AI</strong>
-          <span>Ganti karakter suara</span>
+          <span>Karakter suara</span>
         </div>
         <select class="settings-select" id="setVoicePreset">
           <option value="default">Default</option>
@@ -536,20 +525,18 @@ const VIDEO_KEYWORDS = ['buat video','buatkan video','generate video','bikin vid
 function isImageRequest(t){ return IMG_KEYWORDS.some(k => t.toLowerCase().includes(k)); }
 function isVideoRequest(t){ return VIDEO_KEYWORDS.some(k => t.toLowerCase().includes(k)); }
 
-/* Voice Preset — karakter suara */
 const VOICE_PRESETS = {
-  default: { rate: 1.00, pitch: 1.00, style: '' },
-  friendly: { rate: 1.02, pitch: 1.10, style: 'Hai! ' },
-  cheerful: { rate: 1.10, pitch: 1.20, style: 'Wah, ' },
-  calm:     { rate: 0.92, pitch: 0.92, style: 'Baik, ' },
-  serious:  { rate: 0.98, pitch: 0.85, style: '' }
+  default:  { rate: 1.00, pitch: 1.00 },
+  friendly: { rate: 1.02, pitch: 1.10 },
+  cheerful: { rate: 1.10, pitch: 1.20 },
+  calm:     { rate: 0.92, pitch: 0.92 },
+  serious:  { rate: 0.98, pitch: 0.85 }
 };
 
 /* ============ SETTINGS ============ */
 const DEFAULTS = {
   endpoint: 'auto',
   timeout: 30,
-  fast: true,
   speak: true,
   voicePreset: 'default',
   lang: 'id-ID',
@@ -596,7 +583,6 @@ let listening = false;
 let finalizeTimer = null;
 let lastTranscript = '';
 let speechUnlocked = false;
-let currentUtterance = null;
 
 /* ============ UNLOCK SPEECH ============ */
 function unlockSpeech() {
@@ -607,14 +593,13 @@ function unlockSpeech() {
     u.volume = 0;
     window.speechSynthesis.speak(u);
     window.speechSynthesis.cancel();
-    console.log('[TTS] Unlocked');
   } catch (e) {}
 }
 document.addEventListener('touchstart', unlockSpeech, { once: true });
 document.addEventListener('click', unlockSpeech, { once: true });
 document.addEventListener('keydown', unlockSpeech, { once: true });
 
-/* ============ BLOCK ALL GESTURES ============ */
+/* ============ BLOCK GESTURES ============ */
 document.addEventListener('gesturestart', e => e.preventDefault());
 document.addEventListener('gesturechange', e => e.preventDefault());
 document.addEventListener('gestureend', e => e.preventDefault());
@@ -639,39 +624,24 @@ function showToast(msg, isError = false) {
 /* ============ WELCOME ============ */
 function hideWelcome(){ const w = document.getElementById('welcome'); if (w) w.remove(); }
 
-/* ============ KEYBOARD SYNC (KONSISTEN) ============ */
-const vv = window.visualViewport;
-let resizeTimeout = null;
-
+/* ============ KEYBOARD SYNC — SIMPLE & KONSISTEN ============ */
 function syncViewport() {
-  const vh = window.visualViewport ? window.visualViewport.height : window.innerHeight;
-  const offsetTop = window.visualViewport ? window.visualViewport.offsetTop : 0;
-
-  app.style.height = vh + 'px';
-  app.style.top = offsetTop + 'px';
-
-  // Scroll ke bawah biar input keliatan
+  // Pakai dvh di CSS sudah cukup, ini cuma buat auto scroll
   requestAnimationFrame(() => {
-    if (chat.scrollHeight - chat.scrollTop - chat.clientHeight < 300) {
-      chat.scrollTop = chat.scrollHeight;
-    }
+    const isNearBottom = chat.scrollHeight - chat.scrollTop - chat.clientHeight < 200;
+    if (isNearBottom) chat.scrollTop = chat.scrollHeight;
   });
 }
 
-function debouncedSync() {
-  if (resizeTimeout) cancelAnimationFrame(resizeTimeout);
-  resizeTimeout = requestAnimationFrame(syncViewport);
-}
-
-if (vv) {
-  vv.addEventListener('resize', debouncedSync);
-  vv.addEventListener('scroll', debouncedSync);
-}
-window.addEventListener('resize', debouncedSync);
+window.addEventListener('resize', syncViewport);
 window.addEventListener('orientationchange', () => setTimeout(syncViewport, 250));
+if (window.visualViewport) {
+  window.visualViewport.addEventListener('resize', syncViewport);
+  window.visualViewport.addEventListener('scroll', syncViewport);
+}
 syncViewport();
 
-/* ============ TEXT TO SPEECH (SMOOTH & NATURAL) ============ */
+/* ============ TEXT TO SPEECH ============ */
 function speak(text) {
   if (!settings.speak) return;
   if (!('speechSynthesis' in window)) {
@@ -683,7 +653,6 @@ function speak(text) {
   try {
     window.speechSynthesis.cancel();
 
-    // Bersihkan teks dari markdown, emoji, url
     let clean = String(text)
       .replace(/```[\s\S]*?```/g, ' kode program ')
       .replace(/[*_~`#>|]/g, '')
@@ -695,53 +664,39 @@ function speak(text) {
     if (!clean) return;
     if (clean.length > 700) clean = clean.slice(0, 700) + '.';
 
-    // Bikin suara lebih natural: kalau kelipatan 3 kata, tambah pause
-    clean = clean.replace(/([.!?])\s+/g, '$1  '); // pause setelah tanda baca
+    // Pause setelah tanda baca biar natural
+    clean = clean.replace(/([.!?])\s+/g, '$1  ');
 
     const u = new SpeechSynthesisUtterance(clean);
 
-    // Preset karakter suara
     const preset = VOICE_PRESETS[settings.voicePreset] || VOICE_PRESETS.default;
     u.lang = settings.lang;
     u.rate = ((settings.rate || 10) / 10) * preset.rate;
     u.pitch = ((settings.pitch || 10) / 10) * preset.pitch;
     u.volume = 1.0;
 
-    // Cari voice terbaik
     const voices = window.speechSynthesis.getVoices();
     const langPrefix = settings.lang.split('-')[0];
     const exact = voices.find(v => v.lang === settings.lang);
     const prefix = voices.find(v => v.lang.startsWith(langPrefix));
     const def = voices.find(v => v.default);
     const chosen = exact || prefix || def;
-
     if (chosen) {
       u.voice = chosen;
       u.lang = chosen.lang;
     }
 
-    u.onstart = () => {
-      micBtn.classList.add('mic-active');
-      console.log('[TTS] Started');
-    };
-    u.onend = () => {
-      micBtn.classList.remove('mic-active');
-      console.log('[TTS] Ended');
-    };
-    u.onerror = (e) => {
-      micBtn.classList.remove('mic-active');
-      console.error('[TTS] Error:', e.error);
-    };
+    u.onstart = () => micBtn.classList.add('mic-active');
+    u.onend = () => micBtn.classList.remove('mic-active');
+    u.onerror = () => micBtn.classList.remove('mic-active');
 
-    currentUtterance = u;
     window.speechSynthesis.speak(u);
 
     setTimeout(() => {
       if (window.speechSynthesis.paused) window.speechSynthesis.resume();
     }, 100);
-
   } catch (e) {
-    console.error('[TTS] Exception:', e);
+    console.error('[TTS]', e);
   }
 }
 
@@ -974,11 +929,10 @@ function testVoice() {
     'Total voices: ' + voices.length + '\n' +
     'Voice aktif: ' + (match ? match.name + ' (' + match.lang + ')' : 'tidak ada') + '\n' +
     'Bahasa: ' + settings.lang + '\n' +
-    'Preset: ' + settings.voicePreset + '\n' +
-    'Auto-Speak: ' + (settings.speak ? 'ON' : 'OFF'),
+    'Preset: ' + settings.voicePreset,
     'bot'
   );
-  speak('Hai! Tes suara. Satu, dua, tiga. Suara AI sudah siap dipakai.');
+  speak('Hai! Tes suara. Satu, dua, tiga. Suara AI sudah siap.');
 }
 
 /* ============ SEND ============ */
@@ -1016,8 +970,7 @@ async function sendMessage(customText) {
       addVideoMessage(url, prompt);
     } else {
       addTyping();
-      // Prompt biar AI lebih santai & natural
-      const sysPrompt = 'Kamu GrenX, asisten AI yang santai, hangat, dan ngobrol kayak teman. Pakai bahasa sehari-hari, kadang singkat, kadang panjang sesuai kebutuhan. Jangan kaku, jangan formal. Sesuaikan bahasa dengan user.\n\nUser: ' + text;
+      const sysPrompt = 'Kamu GrenX, asisten AI santai, hangat, ngobrol kayak teman. Bahasa sehari-hari, jangan kaku, jangan formal. Sesuaikan bahasa dengan user.\n\nUser: ' + text;
       const reply = await callChat(sysPrompt);
       rmTyping();
       addMessage(reply, 'bot');
@@ -1043,7 +996,7 @@ input.addEventListener('keydown', e => {
 });
 input.addEventListener('input', () => {
   input.style.height = '24px';
-  const h = Math.min(input.scrollHeight, 100);
+  const h = Math.min(input.scrollHeight, 90);
   input.style.height = h + 'px';
 });
 input.addEventListener('focus', () => inputBar.classList.add('focus'));
@@ -1065,7 +1018,7 @@ function initRecognition() {
     listening = true;
     micBtn.classList.add('mic-active');
     voiceStatus.textContent = 'Mendengarkan...';
-    voiceHint.textContent = 'Bicara sekarang...';
+    voiceHint.textContent = 'Bicara sekarang, AI akan jawab';
     voiceTranscript.textContent = '';
     lastTranscript = '';
   };
@@ -1079,15 +1032,16 @@ function initRecognition() {
     lastTranscript = transcript;
     voiceTranscript.textContent = '"' + transcript + '"';
 
+    // FINALIZE: kalau diam 1.2 detik → langsung kirim
     clearTimeout(finalizeTimer);
     finalizeTimer = setTimeout(() => {
       const text = lastTranscript.trim();
       if (!text) return;
-      voiceStatus.textContent = 'Memproses...';
+      voiceStatus.textContent = 'Dikirim ke AI...';
       voiceHint.textContent = 'AI sedang berpikir';
       stopVoice();
       sendMessage(text);
-    }, 1500);
+    }, 1200);
   };
 
   rec.onerror = (e) => {
@@ -1192,7 +1146,6 @@ function loadSettingsToUI() {
   document.getElementById('setEndpoint').value = settings.endpoint;
   document.getElementById('setTimeout').value = settings.timeout;
   document.getElementById('setTimeoutVal').textContent = settings.timeout + 's';
-  document.getElementById('setFast').checked = settings.fast;
   document.getElementById('setSpeak').checked = settings.speak;
   document.getElementById('setVoicePreset').value = settings.voicePreset;
   document.getElementById('setLang').value = settings.lang;
@@ -1224,7 +1177,6 @@ document.getElementById('setPitch').addEventListener('input', e => {
 document.getElementById('saveSettings').addEventListener('click', () => {
   settings.endpoint = document.getElementById('setEndpoint').value;
   settings.timeout = parseInt(document.getElementById('setTimeout').value) || 30;
-  settings.fast = document.getElementById('setFast').checked;
   settings.speak = document.getElementById('setSpeak').checked;
   settings.voicePreset = document.getElementById('setVoicePreset').value;
   settings.lang = document.getElementById('setLang').value;
@@ -1235,31 +1187,26 @@ document.getElementById('saveSettings').addEventListener('click', () => {
   settingsPanel.classList.remove('show');
   showToast('Pengaturan disimpan');
 
-  // Test suara baru
   if (settings.speak) {
-    const presetNames = {
+    const names = {
       default: 'suara default',
       friendly: 'suara ramah',
       cheerful: 'suara ceria',
       calm: 'suara tenang',
       serious: 'suara tegas'
     };
-    speak('Hai! Sekarang pakai ' + (presetNames[settings.voicePreset] || 'suara baru') + '.');
+    speak('Hai! Sekarang pakai ' + (names[settings.voicePreset] || 'suara baru') + '.');
   }
 });
 
 /* ============ INIT VOICES ============ */
-function loadVoices() {
-  const v = window.speechSynthesis.getVoices();
-  console.log('[TTS] Voices loaded:', v.length);
-}
 if ('speechSynthesis' in window) {
-  loadVoices();
-  window.speechSynthesis.onvoiceschanged = loadVoices;
+  window.speechSynthesis.getVoices();
+  window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
   let retry = 0;
-  const retryInterval = setInterval(() => {
+  const iv = setInterval(() => {
     const v = window.speechSynthesis.getVoices();
-    if (v.length > 0 || retry > 15) clearInterval(retryInterval);
+    if (v.length > 0 || retry > 15) clearInterval(iv);
     retry++;
   }, 500);
 }
